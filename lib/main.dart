@@ -5,7 +5,7 @@ import 'package:haruflix/services/api_service.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  ApiService().getTodaysToon();
+
   runApp(const MyApp());
 }
 

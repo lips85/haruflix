@@ -1,13 +1,13 @@
 import 'dart:convert';
-
 import 'package:haruflix/models/webtoon_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = 'https://webtoon-crawler.nomadcoders.workers.dev';
-  final String today = "today";
+  static const String baseUrl =
+      'https://webtoon-crawler.nomadcoders.workers.dev';
+  static const String today = "today";
 
-  Future<List<WebtoonModel>> getTodaysToon() async {
+  static Future<List<WebtoonModel>> getTodaysToon() async {
     List<WebtoonModel> webtoonInstances = [];
     final url = Uri.parse("$baseUrl/$today");
     final response = await http.get(url);
