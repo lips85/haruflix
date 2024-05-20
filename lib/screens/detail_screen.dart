@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:haruflix/models/webtoon_detail_model.dart';
 import 'package:haruflix/models/webtoon_episode_model.dart';
 import 'package:haruflix/services/api_service.dart';
+import 'package:haruflix/widgets/episode_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
@@ -20,12 +22,14 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences pref;
 
   @override
   void initState() {
     super.initState();
     webtoon = ApiService.getWebtoonDetail(widget.id);
     episodes = ApiService.getLatestEpisodesByID(widget.id);
+    initPrefs();
   }
 
   @override
@@ -36,6 +40,14 @@ class _DetailScreenState extends State<DetailScreen> {
         elevation: 0,
         foregroundColor: Colors.green,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: () async {},
+            icon: const Icon(
+              Icons.favorite_outline,
+            ),
+          ),
+        ],
         title: Text(
           widget.title,
           style: const TextStyle(
@@ -116,41 +128,9 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green.shade300,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    offset: const Offset(5, 5),
-                                    color: Colors.black.withOpacity(0.1),
-                                  ),
-                                ]),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 20,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    episode.title,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          Episode(
+                            episode: episode,
+                            webtoonId: widget.id,
                           ),
                       ],
                     );
