@@ -26,10 +26,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Haruflix',
+
       // 웹툰 연결
       // home: HomeScreenWebtoon(),
+      theme: ThemeData(
+        useMaterial3: false,
+        primaryColor: Colors.amber[50],
+        scaffoldBackgroundColor: Colors.amber[50],
+      ),
 
       // 영화 연결s
       home: HomeScreenHaruMovie(),
