@@ -35,7 +35,7 @@ class Movie extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
-              overflow: TextOverflow.fade,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
             ),
           ),

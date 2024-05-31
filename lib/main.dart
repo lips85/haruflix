@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:haruflix/02_final_movie/screens/home_screen_haru_movie.dart';
-import 'package:haruflix/02_product_movie/screens/home_screens.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();

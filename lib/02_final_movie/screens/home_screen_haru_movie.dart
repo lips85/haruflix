@@ -78,6 +78,8 @@ class MovieBuilder extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<List<MovieModel>> snapshot) {
         if (snapshot.hasData) {
+          List<MovieModel> sortedMovies = snapshot.data!;
+          sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
