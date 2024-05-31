@@ -17,31 +17,34 @@ class MovieListed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: movies.length,
-      itemBuilder: (context, index) {
-        var movie = movies[index];
-        if (istitle) {
-          return Movie(
-            title: movie.title,
-            posterPath: movie.posterPath,
-            id: movie.id,
-            width: width,
-            height: height,
-          );
-        } else {
-          return Movie(
-            title: null,
-            posterPath: movie.posterPath,
-            id: movie.id,
-            width: width,
-            height: height,
-          );
-        }
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        width: 10,
+    return SizedBox(
+      height: height + 20,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: movies.length,
+        itemBuilder: (context, index) {
+          var movie = movies[index];
+          if (istitle) {
+            return Movie(
+              title: movie.title,
+              posterPath: movie.posterPath,
+              id: movie.id,
+              width: width,
+              height: height,
+            );
+          } else {
+            return Movie(
+              title: null,
+              posterPath: movie.posterPath,
+              id: movie.id,
+              width: width,
+              height: height,
+            );
+          }
+        },
+        separatorBuilder: (context, index) => const SizedBox(
+          width: 10,
+        ),
       ),
     );
   }

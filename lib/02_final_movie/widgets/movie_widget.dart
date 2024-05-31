@@ -19,7 +19,7 @@ class Movie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PosterImage(
           url: posterPath,
@@ -27,10 +27,16 @@ class Movie extends StatelessWidget {
           height: height,
         ),
         if (title != null)
-          Text(
-            title!,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
+          SizedBox(
+            width: width,
+            height: 17,
+            child: Text(
+              title!,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.fade,
+              textAlign: TextAlign.start,
             ),
           ),
       ],

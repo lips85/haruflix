@@ -5,11 +5,10 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String baseUrl = 'https://movies-api.nomadcoders.workers.dev';
-  static const String popular = "popular";
 
-  static Future<List<MovieModel>> getPopularMovie() async {
+  static Future<List<MovieModel>> getMovie(String parser) async {
     List<MovieModel> movieInstances = [];
-    final url = Uri.parse("$baseUrl/$popular");
+    final url = Uri.parse("$baseUrl/$parser");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
