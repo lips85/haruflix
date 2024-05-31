@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:haruflix/screens/home_screens.dart';
+import 'package:haruflix/01_product_webtoon/screens/home_screens.dart';
+import 'package:haruflix/02_product_movie/screens/home_screens.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -26,7 +27,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      // 웹툰 연결
+      // home: HomeScreenWebtoon(),
+      home: HomeScreenMovie(),
     );
   }
 }

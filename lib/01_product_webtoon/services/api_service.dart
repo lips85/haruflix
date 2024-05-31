@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:haruflix/models/webtoon_detail_model.dart';
-import 'package:haruflix/models/webtoon_episode_model.dart';
-import 'package:haruflix/models/webtoon_model.dart';
+import 'package:haruflix/01_product_webtoon/models/webtoon_detail_model.dart';
+import 'package:haruflix/01_product_webtoon/models/webtoon_episode_model.dart';
+import 'package:haruflix/01_product_webtoon/models/webtoon_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:haruflix/models/webtoon_detail_model.dart';
-import 'package:haruflix/models/webtoon_episode_model.dart';
-import 'package:haruflix/services/api_service.dart';
-import 'package:haruflix/widgets/episode_widget.dart';
+import 'package:haruflix/02_product_movie/models/webtoon_detail_model.dart';
+import 'package:haruflix/02_product_movie/models/webtoon_episode_model.dart';
+import 'package:haruflix/02_product_movie/services/api_service.dart';
+import 'package:haruflix/02_product_movie/widgets/episode_widget.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailScreen extends StatefulWidget {

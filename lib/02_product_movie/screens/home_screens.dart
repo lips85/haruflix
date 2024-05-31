@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:haruflix/models/webtoon_model.dart';
-import 'package:haruflix/services/api_service.dart';
-import 'package:haruflix/widgets/webtoon_widget.dart';
+import 'package:haruflix/02_product_movie/models/webtoon_model.dart';
+import 'package:haruflix/02_product_movie/services/api_service.dart';
+import 'package:haruflix/02_product_movie/widgets/webtoon_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreenMovie extends StatelessWidget {
+  HomeScreenMovie({super.key});
 
   final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToon();
 

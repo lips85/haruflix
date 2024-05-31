@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haruflix/models/webtoon_episode_model.dart';
+import 'package:haruflix/01_product_webtoon/models/webtoon_episode_model.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Episode extends StatelessWidget {
