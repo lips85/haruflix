@@ -1,176 +1,206 @@
 import 'package:flutter/material.dart';
-import 'package:haruflix/02_product_movie/models/webtoon_detail_model.dart';
-import 'package:haruflix/02_product_movie/models/webtoon_episode_model.dart';
+import 'package:haruflix/02_product_movie/models/movie_detail_model.dart';
+import 'package:haruflix/02_product_movie/models/movie_model.dart';
 import 'package:haruflix/02_product_movie/services/api_service.dart';
-import 'package:haruflix/02_product_movie/widgets/episode_widget.dart';
+import 'package:haruflix/02_product_movie/services/poster/image_uri.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+class MovieDetailScreen extends StatelessWidget {
+  static const service = MovieService();
 
-class DetailScreen extends StatefulWidget {
-  final String title, thumb, id;
+  final Movie movie;
 
-  const DetailScreen({
+  const MovieDetailScreen({
     super.key,
-    required this.title,
-    required this.thumb,
-    required this.id,
+    required this.movie,
   });
-
-  @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  late Future<WebtoonDetailModel> webtoon;
-  late Future<List<WebtoonEpisodeModel>> episodes;
-  late SharedPreferences prefs;
-  bool isLiked = false;
-
-  Future initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-    final likedToons = prefs.getStringList("likedToons");
-    if (likedToons != null) {
-      if (likedToons.contains(widget.id) == true) {
-        setState(() {
-          isLiked = true;
-        });
-      }
-    } else {
-      await prefs.setStringList("likedToons", []);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    webtoon = ApiService.getWebtoonDetail(widget.id);
-    episodes = ApiService.getLatestEpisodesByID(widget.id);
-    initPrefs();
-  }
-
-  onHeartTap() async {
-    final likedToons = prefs.getStringList('likedToons');
-    if (likedToons != null) {
-      if (isLiked) {
-        likedToons.remove(widget.id);
-      } else {
-        likedToons.add(widget.id);
-      }
-      await prefs.setStringList('likedToons', likedToons);
-      setState(() {
-        isLiked = !isLiked;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        foregroundColor: Colors.green,
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: onHeartTap,
-            icon: Icon(
-              isLiked ? Icons.favorite : Icons.favorite_outline,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.network(
+              ImageUri.string(movie.posterPath),
+              fit: BoxFit.cover,
             ),
           ),
+          Positioned.fill(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      appBar(onBackTap: () => Navigator.of(context).pop()),
+                      const SizedBox(height: 200),
+                      FutureBuilder(
+                        future: service.fetchMovieDetailById(id: movie.id),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          MovieDetail movieDetail = snapshot.data!;
+                          return Column(
+                            children: [
+                              movieInfo(
+                                title: movieDetail.title,
+                                rating: movieDetail.rating ~/ 2,
+                                runtime: movieDetail.runtime,
+                                genres: movieDetail.genres,
+                              ),
+                              const SizedBox(height: 48),
+                              storyline(movieDetail.storyline)
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 48,
+            right: 48,
+            bottom: 32,
+            child: _BuyTicketButton(),
+          ),
         ],
-        title: Text(
-          widget.title,
+      ),
+    );
+  }
+
+  Widget appBar({required void Function() onBackTap}) {
+    return GestureDetector(
+      onTap: onBackTap,
+      child: const Row(
+        children: [
+          Icon(
+            Icons.chevron_left,
+            color: Colors.white,
+            size: 24,
+          ),
+          SizedBox(width: 8),
+          Text(
+            "Back to list",
+            style: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget movieInfo({
+    required String title,
+    required int rating,
+    required int runtime,
+    required List<String> genres,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
           style: const TextStyle(
+            color: Colors.white,
             fontSize: 24,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(height: 4),
+        _RatingView(rating: rating),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            const Text(
+              '2h 14min',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(width: 4),
+            const Text(
+              '|',
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(width: 4),
+            Text(
+              genres.join(", "),
+              style: const TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget storyline(String storyline) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Storyline',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          storyline,
+          softWrap: true,
+          style: const TextStyle(color: Colors.white),
+          maxLines: null,
+        )
+      ],
+    );
+  }
+}
+
+class _RatingView extends StatelessWidget {
+  final int rating;
+
+  const _RatingView({required this.rating});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(
+        5,
+        (index) {
+          return Icon(
+            Icons.star,
+            color: index < rating ? Colors.yellow : Colors.grey,
+          );
+        },
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(50),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: widget.id,
-                    child: Container(
-                      width: 250,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 15,
-                              offset: const Offset(10, 10),
-                            ),
-                          ]),
-                      child: Image.network(
-                        widget.thumb,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              FutureBuilder(
-                future: webtoon,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          snapshot.data!.about,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "${snapshot.data!.genre} / ${snapshot.data!.age}",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                  return const Text("Loading...");
-                },
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              FutureBuilder(
-                future: episodes,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        for (var episode in snapshot.data!)
-                          Episode(
-                            episode: episode,
-                            webtoonId: widget.id,
-                          ),
-                      ],
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ],
+    );
+  }
+}
+
+class _BuyTicketButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFFF8D848),
+      ),
+      child: const Center(
+        child: Text(
+          'Buy ticket',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
