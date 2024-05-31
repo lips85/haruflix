@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:haruflix/02_final_movie/models/movie_detail_model.dart';
 import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,30 +24,14 @@ class ApiService {
     }
   }
 
-//   static Future<WebtoonDetailModel> getWebtoonDetail(String id) async {
-//     final url = Uri.parse("$baseUrl/$id");
-//     final response = await http.get(url);
-//     if (response.statusCode == 200) {
-//       final webtoon = jsonDecode(response.body);
-//       return WebtoonDetailModel.fromJson(webtoon);
-//     } else {
-//       throw Exception('Failed to load data');
-//     }
-//   }
-
-//   static Future<List<WebtoonEpisodeModel>> getLatestEpisodesByID(
-//       String id) async {
-//     List<WebtoonEpisodeModel> episodeInstances = [];
-//     final url = Uri.parse("$baseUrl/$id/episodes");
-//     final response = await http.get(url);
-//     if (response.statusCode == 200) {
-//       final episodes = jsonDecode(response.body);
-//       for (var episode in episodes) {
-//         episodeInstances.add(WebtoonEpisodeModel.fromJson(episode));
-//       }
-//       return episodeInstances;
-//     } else {
-//       throw Exception('Failed to load data');
-//     }
-//   }
+  static Future<MovieDetailModel> getMovieDetail(String id) async {
+    final url = Uri.parse("$baseUrl/$id");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final movie = jsonDecode(response.body);
+      return MovieDetailModel.fromJson(movie);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }
