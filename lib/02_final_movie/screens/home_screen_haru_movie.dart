@@ -42,7 +42,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 istitle: true,
               ),
               MovieBuilder(
-                text: "Now Playing Movies",
+                text: "Coming Soon Movies",
                 movieList: comingSoonMovie,
                 width: 150,
                 height: 150,
@@ -77,7 +77,11 @@ class MovieBuilder extends StatelessWidget {
       future: movieList,
       builder:
           (BuildContext context, AsyncSnapshot<List<MovieModel>> snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
           List<MovieModel> sortedMovies = snapshot.data!;
           sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
           return Padding(
@@ -91,7 +95,7 @@ class MovieBuilder extends StatelessWidget {
                 ),
                 MovieListed(
                   istitle: istitle,
-                  movies: snapshot.data!,
+                  movies: sortedMovies,
                   width: width,
                   height: height,
                 ),

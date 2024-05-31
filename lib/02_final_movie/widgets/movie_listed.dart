@@ -24,23 +24,13 @@ class MovieListed extends StatelessWidget {
         itemCount: movies.length,
         itemBuilder: (context, index) {
           var movie = movies[index];
-          if (istitle) {
-            return Movie(
-              title: movie.title,
-              posterPath: movie.posterPath,
-              id: movie.id,
-              width: width,
-              height: height,
-            );
-          } else {
-            return Movie(
-              title: null,
-              posterPath: movie.posterPath,
-              id: movie.id,
-              width: width,
-              height: height,
-            );
-          }
+          return Movie(
+            title: istitle ? movie.title : null,
+            posterPath: movie.posterPath,
+            id: movie.id,
+            width: width,
+            height: height,
+          );
         },
         separatorBuilder: (context, index) => const SizedBox(
           width: 10,
