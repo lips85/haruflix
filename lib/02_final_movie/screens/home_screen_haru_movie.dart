@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:haruflix/02_final_movie/services/api_service.dart';
-
-import '../widgets/movie_widget.dart';
+import 'package:haruflix/02_final_movie/widgets/movie_listed.dart';
 
 class HomeScreenHaruMovie extends StatelessWidget {
   HomeScreenHaruMovie({super.key});
@@ -15,14 +14,13 @@ class HomeScreenHaruMovie extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: const Text(
-          'HaruFlix',
-        ),
+        title: const Text('HaruFlix'),
       ),
       body: SafeArea(
-        child: FutureBuilder(
+        child: FutureBuilder<List<MovieModel>>(
           future: popularMovies,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<MovieModel>> snapshot) {
             if (snapshot.hasData) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -34,11 +32,13 @@ class HomeScreenHaruMovie extends StatelessWidget {
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Expanded(
-                        child: makeList(
-                      snapshot,
-                      300,
-                      200,
-                    )),
+                      child: MovieListed(
+                        istitle: false,
+                        movies: snapshot.data!,
+                        width: 300,
+                        height: 200,
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -48,27 +48,6 @@ class HomeScreenHaruMovie extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-
-  ListView makeList(
-      AsyncSnapshot<dynamic> snapshot, double width, double height) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: snapshot.data!.length,
-      itemBuilder: (context, index) {
-        var movie = snapshot.data![index];
-        return Movie(
-          title: movie.title,
-          posterPath: movie.posterPath,
-          id: movie.id,
-          width: width,
-          height: height,
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        width: 10,
       ),
     );
   }

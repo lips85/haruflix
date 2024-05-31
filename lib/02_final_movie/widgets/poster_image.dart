@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class PosterImage extends StatelessWidget {
   final String url;
-  final double width;
-  final double height;
+  final double width, height;
 
   const PosterImage({
     super.key,

@@ -9,7 +9,7 @@ class Movie extends StatelessWidget {
 
   const Movie({
     super.key,
-    this.title,
+    required this.title,
     required this.posterPath,
     required this.id,
     required this.width,
@@ -32,9 +32,7 @@ class Movie extends StatelessWidget {
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-          )
-        else
-          const Text(""),
+          ),
       ],
     );
   }
