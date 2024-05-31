@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:haruflix/03_final_movie/models/movie_model.dart';
+import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -12,11 +12,11 @@ class ApiService {
     final url = Uri.parse("$baseUrl/$popular");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> movies = jsonDecode(response.body);
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      final List<dynamic> movies = responseJson['results'];
 
       for (var movie in movies) {
         movieInstances.add(MovieModel.fromJson(movie));
-        print(movieInstances.length);
       }
       return movieInstances;
     } else {
