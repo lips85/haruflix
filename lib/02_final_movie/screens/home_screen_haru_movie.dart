@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haruflix/02_final_movie/constants/gaps.dart';
 import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:haruflix/02_final_movie/services/api_service.dart';
 import 'package:haruflix/02_final_movie/widgets/movie_listed.dart';
@@ -30,21 +31,23 @@ class HomeScreenHaruMovie extends StatelessWidget {
               MovieBuilder(
                 text: "Popular Movies",
                 movieList: popularMovie,
-                width: 300,
-                height: 200,
+                width: 350,
+                height: 250,
                 istitle: false,
               ),
+              Gaps.v20,
               MovieBuilder(
                 text: "Now Playing Movies",
                 movieList: nowPlayingMovies,
-                width: 150,
+                width: 180,
                 height: 150,
                 istitle: true,
               ),
+              Gaps.v20,
               MovieBuilder(
                 text: "Coming Soon Movies",
                 movieList: comingSoonMovie,
-                width: 150,
+                width: 180,
                 height: 150,
                 istitle: true,
               ),
@@ -82,8 +85,9 @@ class MovieBuilder extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          List<MovieModel> sortedMovies = snapshot.data!;
-          sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
+          // List<MovieModel> sortedMovies = snapshot.data!;
+          // sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
+          // snapshot.data!.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -93,9 +97,10 @@ class MovieBuilder extends StatelessWidget {
                   text,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
+                Gaps.v10,
                 MovieListed(
                   istitle: istitle,
-                  movies: sortedMovies,
+                  movies: snapshot.data!,
                   width: width,
                   height: height,
                 ),
@@ -103,9 +108,9 @@ class MovieBuilder extends StatelessWidget {
             ),
           );
         }
-        // return const Center(
-        //   child: CircularProgressIndicator(),
-        // );
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
