@@ -24,14 +24,15 @@ class ApiService {
     }
   }
 
-  static Future<MovieDetailModel> getMovieDetail(String id) async {
-    final url = Uri.parse("$baseUrl/$id");
-    final response = await http.get(url);
+  static Future<MovieDetailModel> getMovieDetail(int id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/movie?id=$id'),
+    );
+
     if (response.statusCode == 200) {
-      final movie = jsonDecode(response.body);
-      return MovieDetailModel.fromJson(movie);
+      return MovieDetailModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load data');
+      throw Exception('Failed to load movie details');
     }
   }
 }
