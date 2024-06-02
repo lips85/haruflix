@@ -3,9 +3,10 @@ import 'package:haruflix/02_final_movie/widgets/poster_image.dart';
 
 class MainPageMovie extends StatelessWidget {
   final String? title;
-  final String posterPath, heroTag;
+  final String posterPath;
   final int id;
   final double width, height;
+  final String heroTag;
 
   const MainPageMovie({
     super.key,
@@ -14,7 +15,7 @@ class MainPageMovie extends StatelessWidget {
     required this.id,
     required this.width,
     required this.height,
-    required this.heroTag,
+    required this.heroTag, // Hero tag 추가
   });
 
   @override
@@ -22,14 +23,12 @@ class MainPageMovie extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Hero(
-          tag: heroTag,
-          child: PosterImage(
-            id: id,
-            url: posterPath,
-            width: width,
-            height: height,
-          ),
+        PosterImage(
+          url: posterPath,
+          width: width,
+          height: height,
+          id: id,
+          heroTag: heroTag, // Hero tag 전달
         ),
         if (title != null)
           SizedBox(

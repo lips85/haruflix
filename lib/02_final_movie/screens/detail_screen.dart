@@ -4,16 +4,16 @@ import 'package:haruflix/02_final_movie/services/api_service.dart';
 import 'package:haruflix/02_final_movie/widgets/detail_poster_image.dart';
 import 'package:haruflix/02_final_movie/widgets/poster_image.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailMovieScreen extends StatelessWidget {
   final int movieId;
   final String posterPath;
   final String heroTag;
 
-  const DetailScreen({
+  const DetailMovieScreen({
     super.key,
     required this.movieId,
     required this.posterPath,
-    required this.heroTag, // Hero tag 추가
+    required this.heroTag,
   });
 
   List<Widget> _buildStarRating(double voteAverage) {
@@ -70,6 +70,7 @@ class DetailScreen extends StatelessWidget {
                           width: 400,
                           height: 600,
                           id: movie.id,
+                          // Hero tag 전달
                         ),
                       ),
                       const SizedBox(height: 10),

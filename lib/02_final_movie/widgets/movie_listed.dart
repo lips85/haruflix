@@ -33,20 +33,13 @@ class MovieListed extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      DetailScreen(
+                MaterialPageRoute(
+                  builder: (context) => DetailMovieScreen(
                     movieId: movie.id,
                     posterPath: movie.posterPath,
                     heroTag: heroTag,
                   ),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
+                  fullscreenDialog: true,
                 ),
               );
             },
@@ -56,7 +49,7 @@ class MovieListed extends StatelessWidget {
               id: movie.id,
               width: width,
               height: height,
-              heroTag: heroTag,
+              heroTag: heroTag, // Hero tag 전달
             ),
           );
         },
