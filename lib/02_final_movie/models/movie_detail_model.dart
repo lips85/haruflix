@@ -1,9 +1,8 @@
 class MovieDetailModel {
-  final String title;
+  final String title, overView, posterPath;
   final double voteAverage;
-  final int runtime;
+  final int runtime, id;
   final List<String> genres;
-  final String overView;
 
   MovieDetailModel({
     required this.title,
@@ -11,6 +10,8 @@ class MovieDetailModel {
     required this.runtime,
     required this.genres,
     required this.overView,
+    required this.posterPath,
+    required this.id,
   });
 
   MovieDetailModel.fromJson(Map<String, dynamic> json)
@@ -20,5 +21,7 @@ class MovieDetailModel {
         genres = (json['genres'] as List<dynamic>)
             .map((e) => e['name'] as String)
             .toList(),
-        overView = json['overview'];
+        overView = json['overview'],
+        posterPath = json['poster_path'],
+        id = json['id'];
 }

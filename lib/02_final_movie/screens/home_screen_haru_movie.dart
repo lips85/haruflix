@@ -34,6 +34,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 width: 350,
                 height: 250,
                 istitle: false,
+                tag: "popular",
               ),
               Gaps.v20,
               MovieBuilder(
@@ -42,6 +43,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 width: 180,
                 height: 150,
                 istitle: true,
+                tag: "now",
               ),
               Gaps.v20,
               MovieBuilder(
@@ -50,6 +52,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 width: 180,
                 height: 150,
                 istitle: true,
+                tag: "comming",
               ),
             ],
           ),
@@ -60,6 +63,11 @@ class HomeScreenHaruMovie extends StatelessWidget {
 }
 
 class MovieBuilder extends StatelessWidget {
+  final Future<List<MovieModel>> movieList;
+  final double width, height;
+  final bool istitle;
+  final String text, tag;
+
   const MovieBuilder({
     super.key,
     required this.movieList,
@@ -67,12 +75,8 @@ class MovieBuilder extends StatelessWidget {
     required this.height,
     required this.istitle,
     required this.text,
+    required this.tag,
   });
-
-  final Future<List<MovieModel>> movieList;
-  final double width, height;
-  final bool istitle;
-  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +89,9 @@ class MovieBuilder extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          // List<MovieModel> sortedMovies = snapshot.data!;
-          // sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
-          // snapshot.data!.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
+          List<MovieModel> sortedMovies = snapshot.data!;
+          sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
+          snapshot.data!.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -99,6 +103,7 @@ class MovieBuilder extends StatelessWidget {
                 ),
                 Gaps.v10,
                 MovieListed(
+                  tag: tag,
                   istitle: istitle,
                   movies: snapshot.data!,
                   width: width,

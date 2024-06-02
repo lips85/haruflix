@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:haruflix/02_final_movie/widgets/poster_image.dart';
 
-class Movie extends StatelessWidget {
+class MainPageMovie extends StatelessWidget {
   final String? title;
-  final String posterPath;
+  final String posterPath, heroTag;
   final int id;
   final double width, height;
 
-  const Movie({
+  const MainPageMovie({
     super.key,
     required this.title,
     required this.posterPath,
     required this.id,
     required this.width,
     required this.height,
+    required this.heroTag,
   });
 
   @override
@@ -21,10 +22,14 @@ class Movie extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PosterImage(
-          url: posterPath,
-          width: width,
-          height: height,
+        Hero(
+          tag: heroTag,
+          child: PosterImage(
+            id: id,
+            url: posterPath,
+            width: width,
+            height: height,
+          ),
         ),
         if (title != null)
           SizedBox(

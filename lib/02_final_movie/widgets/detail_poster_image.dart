@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PosterImage extends StatelessWidget {
+class DetailPosterImage extends StatelessWidget {
   final String url;
   final double width, height;
   final int id;
 
-  const PosterImage({
+  const DetailPosterImage({
     super.key,
     required this.url,
     required this.width,
@@ -22,9 +22,8 @@ class PosterImage extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: Image.network(
         PosterImageUri.string(url),
-        width: width,
-        height: height,
         fit: BoxFit.cover,
+        scale: 1,
       ),
     );
   }

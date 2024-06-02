@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:haruflix/02_final_movie/screens/home_screen_haru_movie.dart';
+import 'package:haruflix/02_product_movie/screens/home_screens.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -28,57 +29,54 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Haruflix',
-
-      // 웹툰 연결
-      // home: HomeScreenWebtoon(),
       theme: ThemeData(
         useMaterial3: false,
-        primaryColor: Colors.amber[50],
-        scaffoldBackgroundColor: Colors.amber[50],
+        primaryColor: Colors.black87,
+        scaffoldBackgroundColor: Colors.black87,
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
           ),
           bodyMedium: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 14,
           ),
           displayLarge: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 32,
             fontWeight: FontWeight.bold,
           ),
           displayMedium: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
           displaySmall: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
           headlineMedium: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           headlineSmall: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
           titleLarge: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.amber[50],
-          titleTextStyle: const TextStyle(
-            color: Colors.black,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black87,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
