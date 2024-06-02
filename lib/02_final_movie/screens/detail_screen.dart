@@ -131,17 +131,30 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                                   Text('${movie.voteAverage} / 10'),
                                 ],
                               ),
-                              Gaps.v40,
-                              Text(
-                                'Runtime: ${movie.runtime} minutes',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                              Gaps.v20,
+                              Row(
+                                children: [
+                                  Text(
+                                    '${(movie.runtime / 60).round()}h ${(movie.runtime % 60).round()}min ',
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '| ${movie.genres.join(', ')}',
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
-                              Gaps.v40,
-                              Text(
-                                'Genres: ${movie.genres.join(', ')}',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                              Gaps.v10,
+                              const Text(
+                                "Story Line",
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
                               ),
-                              Gaps.v40,
+                              Gaps.v10,
                               Text(
                                 movie.overView,
                                 style: Theme.of(context).textTheme.bodyLarge,

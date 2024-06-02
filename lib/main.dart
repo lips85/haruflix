@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             fontSize: Sizes.size32,
             fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
           ),
           displayMedium: TextStyle(
             color: Colors.white,
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // 영화 연결 (final)
-      home: HomeScreenHaruMovie(),
+      home: const HomeScreenHaruMovie(),
     );
   }
 }

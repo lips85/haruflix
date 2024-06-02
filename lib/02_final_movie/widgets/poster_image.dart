@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:haruflix/02_final_movie/screens/detail_screen.dart';
 
 class PosterImage extends StatelessWidget {
   final String url;

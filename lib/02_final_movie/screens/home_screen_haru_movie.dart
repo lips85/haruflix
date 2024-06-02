@@ -5,16 +5,25 @@ import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:haruflix/02_final_movie/services/api_service.dart';
 import 'package:haruflix/02_final_movie/widgets/movie_listed.dart';
 
-class HomeScreenHaruMovie extends StatelessWidget {
-  HomeScreenHaruMovie({super.key});
+class HomeScreenHaruMovie extends StatefulWidget {
+  const HomeScreenHaruMovie({super.key});
 
-  final Future<List<MovieModel>> popularMovie = ApiService.getMovie("popular");
+  @override
+  State<HomeScreenHaruMovie> createState() => _HomeScreenHaruMovieState();
+}
 
-  final Future<List<MovieModel>> nowPlayingMovies =
-      ApiService.getMovie("now-playing");
+class _HomeScreenHaruMovieState extends State<HomeScreenHaruMovie> {
+  late Future<List<MovieModel>> popularMovie;
+  late Future<List<MovieModel>> nowPlayingMovies;
+  late Future<List<MovieModel>> comingSoonMovie;
 
-  final Future<List<MovieModel>> comingSoonMovie =
-      ApiService.getMovie("coming-soon");
+  @override
+  void initState() {
+    super.initState();
+    popularMovie = ApiService.getMovie("popular");
+    nowPlayingMovies = ApiService.getMovie("now-playing");
+    comingSoonMovie = ApiService.getMovie("coming-soon");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
             color: Colors.red,
             fontSize: Sizes.size32,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+            letterSpacing: 0.1,
           ),
         ),
       ),
@@ -43,7 +52,6 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 movieList: popularMovie,
                 width: 350,
                 height: 250,
-                istitle: false,
                 tag: "popular",
               ),
               Gaps.v20,
@@ -52,7 +60,6 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 movieList: nowPlayingMovies,
                 width: 180,
                 height: 150,
-                istitle: true,
                 tag: "now",
               ),
               Gaps.v20,
@@ -61,8 +68,7 @@ class HomeScreenHaruMovie extends StatelessWidget {
                 movieList: comingSoonMovie,
                 width: 180,
                 height: 150,
-                istitle: true,
-                tag: "comming",
+                tag: "coming",
               ),
             ],
           ),
@@ -75,7 +81,6 @@ class HomeScreenHaruMovie extends StatelessWidget {
 class MovieBuilder extends StatelessWidget {
   final Future<List<MovieModel>> movieList;
   final double width, height;
-  final bool istitle;
   final String text, tag;
 
   const MovieBuilder({
@@ -83,7 +88,6 @@ class MovieBuilder extends StatelessWidget {
     required this.movieList,
     required this.width,
     required this.height,
-    required this.istitle,
     required this.text,
     required this.tag,
   });
@@ -101,7 +105,6 @@ class MovieBuilder extends StatelessWidget {
         } else if (snapshot.hasData) {
           List<MovieModel> sortedMovies = snapshot.data!;
           sortedMovies.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
-          snapshot.data!.sort((a, b) => b.voteAverage.compareTo(a.voteAverage));
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -109,13 +112,17 @@ class MovieBuilder extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: const TextStyle(
+                    fontFamily: "BebasNeue",
+                    color: Colors.white,
+                    fontSize: Sizes.size32,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-                Gaps.v10,
                 MovieListed(
                   tag: tag,
-                  istitle: istitle,
-                  movies: snapshot.data!,
+                  movies: sortedMovies,
                   width: width,
                   height: height,
                 ),

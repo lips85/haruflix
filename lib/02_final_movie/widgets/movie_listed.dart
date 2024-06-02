@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:haruflix/02_final_movie/screens/detail_screen.dart';
-import 'package:haruflix/02_final_movie/widgets/movie_widget.dart';
+import 'package:haruflix/02_final_movie/widgets/main_page_movie.dart';
 
 class MovieListed extends StatelessWidget {
   final List<MovieModel> movies;
   final double width, height;
-  final bool istitle;
+
   final String tag;
 
   const MovieListed({
@@ -14,7 +14,6 @@ class MovieListed extends StatelessWidget {
     required this.movies,
     required this.width,
     required this.height,
-    required this.istitle,
     required this.tag,
   });
 
@@ -44,7 +43,7 @@ class MovieListed extends StatelessWidget {
               );
             },
             child: MainPageMovie(
-              title: istitle ? movie.title : null,
+              title: movie.title,
               posterPath: movie.posterPath,
               id: movie.id,
               width: width,
