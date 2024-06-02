@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haruflix/02_final_movie/constants/gaps.dart';
+import 'package:haruflix/02_final_movie/constants/sizes.dart';
 import 'package:haruflix/02_final_movie/models/movie_model.dart';
 import 'package:haruflix/02_final_movie/services/api_service.dart';
 import 'package:haruflix/02_final_movie/widgets/movie_listed.dart';
@@ -21,7 +22,16 @@ class HomeScreenHaruMovie extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: const Text('HaruFlix'),
+        title: const Text(
+          "HARUFLIX",
+          style: TextStyle(
+            fontFamily: "BebasNeue",
+            color: Colors.red,
+            fontSize: Sizes.size32,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

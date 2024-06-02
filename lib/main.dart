@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:haruflix/02_final_movie/constants/sizes.dart';
 
 import 'package:haruflix/02_final_movie/screens/home_screen_haru_movie.dart';
-import 'package:haruflix/02_product_movie/screens/home_screens.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -32,34 +32,35 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         primaryColor: Colors.black87,
-        scaffoldBackgroundColor: Colors.black87,
+        scaffoldBackgroundColor: Colors.black,
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: Sizes.size20,
           ),
           bodyMedium: TextStyle(
             color: Colors.white,
-            fontSize: 14,
+            fontSize: Sizes.size14,
           ),
           displayLarge: TextStyle(
+            fontFamily: "BebasNeue",
             color: Colors.white,
-            fontSize: 32,
+            fontSize: Sizes.size32,
             fontWeight: FontWeight.bold,
           ),
           displayMedium: TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: Sizes.size10,
             fontWeight: FontWeight.bold,
           ),
           displaySmall: TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: Sizes.size10,
             fontWeight: FontWeight.bold,
           ),
           headlineMedium: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: Sizes.size40,
             fontWeight: FontWeight.bold,
           ),
           headlineSmall: TextStyle(
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black87,
+          backgroundColor: Colors.black38,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -84,9 +85,6 @@ class MyApp extends StatelessWidget {
       ),
       // 영화 연결 (final)
       home: HomeScreenHaruMovie(),
-
-      // 영화 연결 (product)
-      // home: const Day12HomeScreen(),
     );
   }
 }
